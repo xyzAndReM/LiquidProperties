@@ -122,12 +122,12 @@ function Viscosity_Text(liquid,temperature){
     if( (T >= Tmin) && (T <= Tmax) ){
         return "$ \\text{Viscosidade Dinâmica } = " + Viscosity(liquid,temperature) +"\\;\\;mP_a\\,s$";
     }
-    else return "Temperatura fora do limite (" + Tmin + ',' + Tmax + ')';
+    else return "Temperatura fora do limite para a viscosidade: (" + Tmin + ', ' + Tmax + ')';
 }
 function Kinetic_Viscosity(liquid,temperature){
     var V = parseFloat(Viscosity(liquid,temperature));
     var D = parseFloat(Density(liquid,temperature));
-    return 1000*V/D;
+    return (1000 * V) / D;
 }
 function Kinetic_Viscosity_Text(liquid,temperature){
     var Tmin = parseInt(liquid.properties.density.Tmin);
@@ -150,13 +150,14 @@ function Density_Text(liquid,temperature){
     if( (T >= Tmin) && (T <= Tmax) ){
         return "$ \\text{Densidade } = " + Density(liquid,temperature) +"\\;\\;kg\\,m^{-3}$";
     }
-    else return "Temperatura fora do limite (" + Tmin + ',' + Tmax + ')';
+    else return "Temperatura fora do limite para a densidade: (" + Tmin + ', ' + Tmax + ")";
 }
 function VBN(lA,lB,xA,xB,T){
    var vA = Kinetic_Viscosity(lA,T);
    var vB = Kinetic_Viscosity(lB,T);
    //console.log(vA+0.8);
    //console.log(Math.log(vA+0.8));
+   console.log("VBN:");
    var vbnA = 14.534*Math.log(Math.log(vA+0.8))+10.975;
    console.log(vbnA);
    var vbnB = 14.534*Math.log(Math.log(vB+0.8))+10.975;
@@ -167,12 +168,13 @@ function VBN(lA,lB,xA,xB,T){
    console.log(vbnM);
    console.log(Math.exp((vbnM - 10.975)/14.534));
    var vM = Math.exp(Math.exp((vbnM - 10.975)/14.534)) - 0.8;
-   console.log(vM)
+   console.log(vM);
+   console.log(":VBN");
    return vM;
 }
 
 function VBN_Text(lA,lB,xA,xB,T){
-    return "$ \\text{Viscosidade Cinética } = " + VBN(lA,lB,xA,xB,T) +"\\;\\;mP_a\\,s$";
+    return "$ \\text{Viscosidade Cinética } = " + VBN(lA,lB,xA,xB,T) +"\\;\\;cS$";
 }
 
 //function Mixture_Viscosity()
@@ -200,4 +202,3 @@ function Output(){
 
     texto = '';
 }
-
